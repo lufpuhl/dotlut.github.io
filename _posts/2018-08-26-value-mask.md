@@ -2,7 +2,7 @@
 layout: post
 title:  "Value Mask"
 date:   2019-01-24
-excerpt: "This is an informal article about a technique that can be used to evaluate the visual presences of the elements of you game."
+excerpt: "This is an informal article about a technique that can be used to evaluate the visual presences of the elements of your game."
 tag:
 - technique
 - composition
@@ -11,31 +11,31 @@ comments: false
 
 ## Introduction
 
-This is an informal article about a technique that can be used to evaluate the visual presence of the elements of your game. There are a plenty of things that changes this visual presence like motion, color contrast, line composition, outlines and so on. Value contrast is one of them.
+This is an informal article about a technique that can be used to evaluate the presence of the visual elements in your game. There are plenty of things that change this visual presence like motion, color contrast, line composition, outlines and so on. Value contrast is one of them.
 
 ## Definitions
 
-In this article, every time the word Value is written with capital ‘V’, it is referencing to the third component from HSV[^wikiHSV] color representation, V or Value.
+In this article, every time the word Value is written with capital ‘V’, it is referencing the third component from HSV[^wikiHSV] color representation, V or Value.
 
 ## Context
 
-On video games, visual readability is something that a lot of people does not take into account when evaluating how good a game is. However, this subject is as important as how good or responsive a controller is.
+On video games, visual readability is something that a lot of people do not take into account when evaluating how good a game is. However, this subject is as important as how good or responsive a controller is.
 
-Games with great visual composition are very comfortable to play, helping you understand what is happening on the screen. One great example, for me, is TowerFall Ascension[^TFA]: a fast paced game on which the colors were so well chosen, that, even with tons of arrows flying around, you can still keep track of your character and your opponents positions.
+Games with great visual composition are very comfortable to play, helping you understand what is happening on the screen. One great example, for me, is TowerFall Ascension[^TFA]: a fast-paced game on which the colors were so well chosen, that, even with tons of arrows flying around, you can still keep track of your character and your opponents' positions.
 
 Another game that has changed a lot in order to improve its readability is League of Legends. There is a beautiful technical presentation about how they create and direct their VFX creation[^vfxLOL].
 
 ## Color Value
 
-One of the techniques you can use in order to evaluate the visual presence of elements in your game it is the Value contrast analysis. Depending on the compositions, the elements with higher Value would bring more focus to them, specially when put side by side with other low Value element. An example, is having an special attack (high Value) flying above the background (low Value) getting more focus because of the Value contrast.
+One of the techniques you can use in order to evaluate the visual presence of elements in your game it is the Value contrast analysis. Depending on the compositions, the elements with higher Value would bring more focus to them, especially when put side by side with other low Value elements. An example is having a  special attack (high Value) flying above the background (low Value) getting more focus because of the Value contrast.
 
-The Value of a color is obtained by the highest number among its Red (R), Blue (B) and Green (G) color channels[^wikiHSV]. The following line of code show to obtain it from a variable called **Color**.
+The Value of a color is obtained by the highest number among its Red (R), Blue (B) and Green (G) color channels[^wikiHSV]. The following line of code shows how to obtain it from a variable called **Color**.
 
 ```glsl
 Value = max(Color.R, Color.G, Color.B)
 ```
 
-The image below show an visual example of this line in action.
+The image below shows a visual example of this line in action.
 
 <figure>
 	<img src="/assets/img/value_mask/color_value_calculus.png">
@@ -45,7 +45,7 @@ The image below show an visual example of this line in action.
 
 ## Post-processing Effects
 
-In order to verify the Value distribution among the elements of our game, i.e. to see the Value of each color on the screen, it will be used a Value Mask. However, before explaining how the mask works, it is necessary a brief introduction about what a post-processing effect is.
+In order to verify the Value distribution among the elements of our game, i.e. to see the Value of each color on the screen, a Value Mask can be used. However, before explaining how the mask works, a brief introduction about what a post-processing effect may be necessary.
 
 In games, they are effects that are added after having the entire information about how the rendered scene should be, but before actually showing it on the screen. Great examples are bloom, anti-aliasing, fog, chroma aberration, motion blur, lens flare.
 
@@ -57,10 +57,10 @@ In games, they are effects that are added after having the entire information ab
 
 ## Technique: Value Mask
 
-Therefore, the Value Mask is a post-processing effect. To apply it, after having the complete scene rendered, you can take the every pixel color and swap it to its own pixel color Value before it goes to the screen. Pseudo code for the effect:
+Therefore, the Value Mask is a post-processing effect. To apply it, after having the complete scene rendered, you can take the every pixel color and swap it to its own pixel color Value before it goes to the screen. Pseudocode for the effect:
 
 What we have:
-- The color of each pixel that would be on the screen. As we process one pixel at time, the variable that contains the current pixel color will be called **PixelColor** in RGB;
+- The color of each pixel that would have on the screen. As we process one pixel at a time, the variable that contains the current pixel color will be called **PixelColor** in RGB;
 - A function that is called for each pixel before it goes to the screen called **ProcessPixelBeforeGoingToDisplay**.
 
 ``` glsl
@@ -123,18 +123,18 @@ Let's apply these color ramp on the TowerFall[^TFA] image we had before:
     <center><figcaption>Value Mask without color ramp (left). Value mask with color ramp - heat map (right).</figcaption></center>
 </figure>
 
-With the color ramp it is easier to see that the color Values of some elements of the game:
+With the color ramp, it is easier to see that the color Values of some elements of the game:
 * Arrows have a reddish color on the heat map -> Color values around 250
 * Walkable tiles have a greenish color on the heat map -> Color values around 130
-* Background have a bluish color on the heat map -> Color values around 30
+* Background has a bluish color on the heat map -> Color values around 30
 
 Moreover, if necessary, you can have multiple color ramps, in order to observe specific color value ranges.
 
 ## Final considerations
 
-As the Value Mask is a post processing effect, it can be applied on a game in real time, i.e. you can apply it while you are playing the game or even on your engine editor (e.g. Unity). This makes easier to verify the Value composition on a game project, because you can see and tweak values without the need of building or exporting images for further analysis.
+As the Value Mask is a post-processing effect, it can be applied to a game in real-time, i.e. you can apply it while you are playing the game or even on your engine editor (e.g. Unity). This makes easier to verify the Value composition of a game project because you can see and tweak values without the need for building or exporting images for further analysis.
 
-Finally, as said before, there are a lot of techniques that balance visual presence of games and Value contrast is only one of them. Feel free to use the stuff I wrote above in your projects or as an inspiration for creating more visual analysis techniques :).
+Finally, as said before, there are a lot of techniques that balance the visual presence of games and Value contrast is only one of them. Feel free to use the stuff I wrote above in your projects or as an inspiration for creating more visual analysis techniques :).
 
 
 ## References
