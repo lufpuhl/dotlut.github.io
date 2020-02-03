@@ -38,7 +38,7 @@ Value = max(Color.R, Color.G, Color.B)
 The image below shows a visual example of this line in action.
 
 <figure>
-	<img src="/assets/img/value_mask/color_value_calculus.png">
+	<center><img src="/assets/img/value_mask/color_value_calculus.png"></center>
 	<center><figcaption>Example of how to obtain the color Value.</figcaption></center>
 </figure>
 
@@ -50,8 +50,7 @@ In order to verify the Value distribution among the elements of our game, i.e. t
 In games, they are effects that are added after having the entire information about how the rendered scene should be, but before actually showing it on the screen. Great examples are bloom, anti-aliasing, fog, chroma aberration, motion blur, lens flare.
 
 <figure class="half">
-    <img src="/assets/img/value_mask/before_pp.png">
-    <img src="/assets/img/value_mask/after_pp.png">
+    <img src="/assets/img/value_mask/post-processing.png">
     <center><figcaption>Left image: How the sphere should look on display. Right image: how it is shown after the bloom post-processing effect being applied.</figcaption></center>
 </figure>
 
@@ -83,9 +82,9 @@ Color ProcessPixelBeforeGoingToDisplay(Color PixelColor)
 So, the new pixel color will range from black to white based on its color value and the result will be the following one.
 
 <figure class="half">
-    <img src="/assets/img/value_mask/tower_fall_00.png">
-    <img src="/assets/img/value_mask/towerfall_00_value_mask.png">
-    <center><figcaption>Normal image (left). Image with Value mask effect applied (right).</figcaption></center>
+    <center><img src="/assets/img/value_mask/tower_fall_00.png"></center>
+    <center><img src="/assets/img/value_mask/towerfall_00_value_mask.png"></center>
+    <center><figcaption>Normal image (top). Image with Value mask effect applied (bottom).</figcaption></center>
 </figure>
 
 This image above is from the game mentioned before, Towerfall Ascension [^TFA].
@@ -95,7 +94,7 @@ This image above is from the game mentioned before, Towerfall Ascension [^TFA].
 One problem that the value mask does not solve well, it that is does not help to identify the numbers behind the Value. Thus, to deal with this problem, instead of taking the pixel color Value and showing it directly, it is possible to use the pixel color Value to sample a color ramp and obtain a Value Heat Map Mask.
 
 <figure>
-	<img src="/assets/img/value_mask/color_ramp.png">
+	 <center><img src="/assets/img/value_mask/color_ramp.png"></center>
 	 <center><figcaption>Color ramp versus Value range.</figcaption></center>
 </figure>
 
@@ -118,9 +117,9 @@ Color ProcessPixelBeforeGoingToDisplay(Color PixelColor)
 Let's apply these color ramp on the TowerFall[^TFA] image we had before:
 
 <figure class="half">
-    <img src="/assets/img/value_mask/towerfall_00_value_mask.png">
-    <img src="/assets/img/value_mask/towerfall_00_value_hm_mask.png">
-    <center><figcaption>Value Mask without color ramp (left). Value mask with color ramp - heat map (right).</figcaption></center>
+    <center><img src="/assets/img/value_mask/towerfall_00_value_mask.png"></center>
+    <center><img src="/assets/img/value_mask/towerfall_00_value_hm_mask.png"></center>
+    <center><figcaption>Value Mask without color ramp (top). Value mask with color ramp - heat map (bottom).</figcaption></center>
 </figure>
 
 With the color ramp, it is easier to see that the color Values of some elements of the game:
@@ -128,11 +127,13 @@ With the color ramp, it is easier to see that the color Values of some elements 
 * Walkable tiles have a greenish color on the heat map -> Color values around 130
 * Background has a bluish color on the heat map -> Color values around 30
 
-Moreover, if necessary, you can have multiple color ramps, in order to observe specific color value ranges.
+Moreover, if necessary, you can have multiple color ramps, in order to observe specific color value ranges. If by your game design rules, you should only use the value range from 200 to 250 for UI elements, you could use a gray ramp from 0 to 200 and only add colors from 200 to 250 in order to check if any other visual element that is not respecting this rule.
 
 ## Final considerations
 
 As the Value Mask is a post-processing effect, it can be applied to a game in real-time, i.e. you can apply it while you are playing the game or even on your engine editor (e.g. Unity). This makes easier to verify the Value composition of a game project because you can see and tweak values without the need for building or exporting images for further analysis.
+
+Be creative with your value heat maps. They may help a lot to both analyse specific value ranges or its full spectrum of values.
 
 Finally, as said before, there are a lot of techniques that balance the visual presence of games and Value contrast is only one of them. Feel free to use the stuff I wrote above in your projects or as an inspiration for creating more visual analysis techniques :).
 
